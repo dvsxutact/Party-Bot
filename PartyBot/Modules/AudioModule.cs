@@ -14,7 +14,7 @@ namespace PartyBot.Modules
               We pass the AudioService Task into the section that would normally require an Embed as that's what all the
               AudioService Tasks are returning. */
 
-        [Command("Join")]
+        [Command("Join")]//[Help("Join", "Requests the bot joins a voice channel.", "Join")]
         public async Task JoinAndPlay()
             => await ReplyAsync("", false, await AudioService.JoinOrPlayAsync((SocketGuildUser)Context.User, Context.Channel, Context.Guild.Id));
 

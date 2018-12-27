@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using PartyBot.DataStructs;
 using PartyBot.Services;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
