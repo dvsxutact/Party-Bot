@@ -12,6 +12,7 @@ using Victoria;
 using Victoria.Entities;
 using Victoria.Entities.Enums;
 using Victoria.Entities.Statistics;
+using Victoria.Utilities;
 
 namespace PartyBot.Services
 {
@@ -117,8 +118,8 @@ namespace PartyBot.Services
                 var player = _lavalink.DefaultNode.GetPlayer(guildId);
 
                 //if The Player is playing, Stop it.
-                if (player.IsPlaying)
-                    await player.StopAsync();
+                //if (player.IsPlaying)
+                //   await player.StopAsync();
 
                 //Leave the voice channel.
                 var channelName = player.VoiceChannel.Name;
@@ -334,6 +335,17 @@ namespace PartyBot.Services
                 .WithColor(Color.DarkMagenta)
                 .AddField("Uptime", node.Uptime, true));
             return embed.Build();
+        }
+
+        public async Task<string> GetLyricsAsync(ulong guildId)
+        {
+            var player = _lavalink.DefaultNode.GetPlayer(guildId);
+            LavaTrack track = player.CurrentTrack;
+            string lyrics = string.Empty;
+            if (track == null)
+                return "Error, Unable to find current track, is the bot playing anything?";
+            else
+                return await LyricsResolver.SearchAsync(track);
         }
 
         #endregion

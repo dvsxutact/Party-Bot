@@ -1,21 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Discord.Net" Version="2.0.0-beta2-01039" />
-    <PackageReference Include="Victoria" Version="3.1.3" />
+    <PackageReference Include="Discord.Net" Version="2.0.0-beta2-01045" />
   </ItemGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="..\..\Victoria\Victoria.csproj" />
+  </ItemGroup>
 </Project>

@@ -49,5 +49,20 @@ namespace PartyBot.Modules
         [Command("Resume")]
         public async Task Resume()
             => await ReplyAsync(await AudioService.Pause(Context.Guild.Id));
+
+        [Command("Lyrics")]
+        public async Task Lyrics()
+        {
+            var lyrics = await AudioService.GetLyricsAsync(Context.Guild.Id);
+            string part1 = null, part2 = null;
+            if (lyrics.Length >= 2000)
+            {
+                part1 = lyrics.Remove(2000);
+                part2 = lyrics.Substring(2000);
+            }
+
+            await ReplyAsync(part1);
+            await ReplyAsync(part2);
+        }
     }
 }
