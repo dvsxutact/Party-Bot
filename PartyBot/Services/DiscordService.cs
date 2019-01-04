@@ -59,8 +59,7 @@ namespace PartyBot.Services
 
         }
 
-        /*Used whenever we want to log something to the Console. 
-            Todo: Hook in a Custom LoggingService. */
+        /*Used whenever we want to log something to the Console. */
         private async Task LogAsync(LogMessage logMessage)
         {
             await LoggingService.LogAsync(logMessage.Source, logMessage.Severity, logMessage.Message);

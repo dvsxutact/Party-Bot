@@ -44,11 +44,11 @@ namespace PartyBot.Modules
 
         [Command("Pause")]
         public async Task Pause()
-            => await ReplyAsync(await AudioService.Pause(Context.Guild.Id));
+            => await ReplyAsync(await AudioService.PauseAsync(Context.Guild.Id));
 
         [Command("Resume")]
         public async Task Resume()
-            => await ReplyAsync(await AudioService.Pause(Context.Guild.Id));
+            => await ReplyAsync(await AudioService.PauseAsync(Context.Guild.Id));
 
         [Command("Lyrics")]
         public async Task Lyrics()

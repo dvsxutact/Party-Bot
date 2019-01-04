@@ -96,11 +96,10 @@ namespace PartyBot.Handlers
                 return;
 
             /* the command failed, let's notify the user that something happened. */
-            await context.Channel.SendMessageAsync($"error: {result.ToString()}");
+            await context.Channel.SendMessageAsync($"error: {result}");
         }
 
-        /*Used whenever we want to log something to the Console. 
-            Todo: Hook in a Custom LoggingService. */
+        /*Used whenever we want to log something to the Console. */
         private Task LogAsync(LogMessage log)
         {
             Console.WriteLine(log.ToString());

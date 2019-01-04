@@ -1,19 +1,16 @@
 ﻿using Discord;
 using Discord.Commands;
 using System;
-using System.Text;
 using System.Threading.Tasks;
 using PartyBot.Handlers;
 using System.Linq;
 using System.Collections.Generic;
-using Victoria;
+using Discord.WebSocket;
 
 namespace PartyBot.Services
 {
     public sealed class BotService
     {
-        public AudioService Audio { get; set; }
-
         public async Task<Embed> DisplayInfoAsync(SocketCommandContext context)
         {
             var fields = new List<EmbedFieldBuilder>();
@@ -42,5 +39,11 @@ namespace PartyBot.Services
             return embed.Build();
         }
 
+        public async Task<Embed> AddBlacklistedChannelAsync(SocketTextChannel channel)
+        {
+            var eb = await EmbedHandler.CreateErrorEmbed("Bot", "Unable to update Blacklisted channels.");
+
+            return eb;
+        }
     }
 }

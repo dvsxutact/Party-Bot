@@ -4,14 +4,12 @@ using PartyBot.DataStructs;
 using PartyBot.Handlers;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Victoria;
 using Victoria.Entities;
 using Victoria.Entities.Enums;
-using Victoria.Entities.Statistics;
 using Victoria.Utilities;
 
 namespace PartyBot.Services
@@ -76,7 +74,6 @@ namespace PartyBot.Services
                     }
 
                     //Find The Youtube Track the User requested.
-                    LavaTrack track;
                     var search = await _lavalink.DefaultNode.SearchYouTubeAsync(query);
 
                     //If we couldn't find anything, tell the user.
@@ -85,19 +82,19 @@ namespace PartyBot.Services
 
                     //Get the first track from the search results.
                     //TODO: Add a 1-5 list for the user to pick from. (Like Fredboat)
-                    track = search.Tracks.FirstOrDefault();
+                    var track = search.Tracks.FirstOrDefault();
 
                     //If the Bot is already playing music, or if it is paused but still has music in the playlist, Add the requested track to the queue.
                     if (player.CurrentTrack != null && player.IsPlaying || player.IsPaused)
                     {
                         player.Queue.Enqueue(track);
-                        await LoggingService.LogInformationAsync("Music", $"{track.Title} has been added to the music queue.");
-                        return await EmbedHandler.CreateBasicEmbed("Music", $"{track.Title} has been added to queue.", Color.Blue);
+                        await LoggingService.LogInformationAsync("Music", $"{track?.Title} has been added to the music queue.");
+                        return await EmbedHandler.CreateBasicEmbed("Music", $"{track?.Title} has been added to queue.", Color.Blue);
                     }
                     //Player was not playing anything, so lets play the requested track.
                     await player.PlayAsync(track);
-                    await LoggingService.LogInformationAsync("Music", $"Bot Now Playing: {track.Title}\nUrl: {track.Uri}");
-                    return await EmbedHandler.CreateBasicEmbed("Music", $"Now Playing: {track.Title}\nUrl: {track.Uri}", Color.Blue);
+                    await LoggingService.LogInformationAsync("Music", $"Bot Now Playing: {track?.Title}\nUrl: {track?.Uri}");
+                    return await EmbedHandler.CreateBasicEmbed("Music", $"Now Playing: {track?.Title}\nUrl: {track?.Uri}", Color.Blue);
                 }
                 //If after all the checks we did, something still goes wrong. Tell the user about it so they can report it back to us.
                 catch (Exception ex)
@@ -148,32 +145,32 @@ namespace PartyBot.Services
                 if (player == null)
                     return await EmbedHandler.CreateErrorEmbed("Music, List", $"Could not aquire player.\nAre you using the bot right now? check{Global.Config.DefaultPrefix}Help for info on how to use the bot.");
 
-                if (player.IsPlaying)
-                {
-                    /*If the queue count is less than 1 and the current track IS NOT null then we wont have a list to reply with.
+                if (!player.IsPlaying)
+                    return await EmbedHandler.CreateErrorEmbed("Music, List",
+                        "Player doesn't seem to be playing anything right now. If this is an error, Please Contact Draxis.");
+                
+                /*If the queue count is less than 1 and the current track IS NOT null then we wont have a list to reply with.
                         In this situation we simply return an embed that displays the current track instead. */
-                    if (player.Queue.Count < 1 && player.CurrentTrack != null)
-                    {
-                        return await EmbedHandler.CreateBasicEmbed($"Now Playing: {player.CurrentTrack.Title}", "Nothing Else Is Queued.", Color.Blue);
-                    }
-                    else
-                    {
-                        /* Now we know if we have something in the queue worth replying with, so we itterate through all the Tracks in the queue.
+                if (player.Queue.Count < 1 && player.CurrentTrack != null)
+                {
+                    return await EmbedHandler.CreateBasicEmbed($"Now Playing: {player.CurrentTrack.Title}", "Nothing Else Is Queued.", Color.Blue);
+                }
+
+                /* Now we know if we have something in the queue worth replying with, so we itterate through all the Tracks in the queue.
                          *  Next Add the Track title and the url however make use of Discords Markdown feature to display everything neatly.
                             This trackNum variable is used to display the number in which the song is in place. (Start at 2 because we're including the current song.*/
-                        var trackNum = 2;
-                        foreach (var track in player.Queue.Items)
-                        {
-                            descriptionBuilder.Append($"{trackNum}: [{track.Title}]({track.Uri}) - {track.Id}\n");
-                            trackNum++;
-                        }
-                        return await EmbedHandler.CreateBasicEmbed("Music Playlist", $"Now Playing: [{player.CurrentTrack.Title}]({player.CurrentTrack.Uri})\n{descriptionBuilder.ToString()}", Color.Blue);
-                    }
-                }
-                else
+                var trackNum = 2;
+                foreach (var track in player.Queue.Items)
                 {
-                    return await EmbedHandler.CreateErrorEmbed("Music, List", "Player doesn't seem to be playing anything right now. If this is an error, Please Contact Draxis.");
+                    descriptionBuilder.Append($"{trackNum}: [{track.Title}]({track.Uri}) - {track.Id}\n");
+                    trackNum++;
                 }
+
+                if (player.CurrentTrack != null)
+                    return await EmbedHandler.CreateBasicEmbed("Music Playlist",
+                        $"Now Playing: [{player.CurrentTrack.Title}]({player.CurrentTrack.Uri})\n{descriptionBuilder}",
+                        Color.Blue);
+                return await EmbedHandler.CreateErrorEmbed("Music, List", "Current Track Null.");
             }
             catch (Exception ex)
             {
@@ -196,25 +193,22 @@ namespace PartyBot.Services
                      User is expected to use the Stop command if they're only wanting to skip the current song. */
                 if (player.Queue.Count < 1)
                 {
-                    return await EmbedHandler.CreateErrorEmbed("Music, SkipTrack", $"Unable To skip a track as there is only One or No songs currently playing." +
+                    return await EmbedHandler.CreateErrorEmbed("Music, SkipTrack", "Unable To skip a track as there is only One or No songs currently playing." +
                         $"\n\nDid you mean {Global.Config.DefaultPrefix}Stop?");
                 }
-                else
-                {
-                    try
-                    {
-                        /* Save the current song for use after we skip it. */
-                        var currentTrack = player.CurrentTrack;
-                        /* Skip the current song. */
-                        await player.SkipAsync();
-                        await LoggingService.LogInformationAsync("Music", $"Bot skipped: {currentTrack.Title}");
-                        return await EmbedHandler.CreateBasicEmbed("Music Skip", $"I have successfully skiped {currentTrack.Title}", Color.Blue);
-                    }
-                    catch (Exception ex)
-                    {
-                        return await EmbedHandler.CreateErrorEmbed("Music, Skip", ex.ToString());
-                    }
 
+                try
+                {
+                    /* Save the current song for use after we skip it. */
+                    var currentTrack = player.CurrentTrack;
+                    /* Skip the current song. */
+                    await player.SkipAsync();
+                    await LoggingService.LogInformationAsync("Music", $"Bot skipped: {currentTrack.Title}");
+                    return await EmbedHandler.CreateBasicEmbed("Music Skip", $"I have successfully skiped {currentTrack.Title}", Color.Blue);
+                }
+                catch (Exception ex)
+                {
+                    return await EmbedHandler.CreateErrorEmbed("Music, Skip", ex.ToString());
                 }
             }
             catch (Exception ex)
@@ -236,10 +230,7 @@ namespace PartyBot.Services
                      If it is playing, we can stop.*/
                 if (player.IsPlaying)
                     await player.StopAsync();
-                /* Not sure if this is required as I think player.StopAsync(); clears the queue anyway. */
-                foreach (var track in player.Queue.Items)
-                    player.Queue.Dequeue();
-                await LoggingService.LogInformationAsync("Music", $"Bot has stopped playback.");
+                await LoggingService.LogInformationAsync("Music", "Bot has stopped playback.");
                 return await EmbedHandler.CreateBasicEmbed("Music Stop", "I Have stopped playback & the playlist has been cleared.", Color.Blue);
             }
             catch (Exception ex)
@@ -254,7 +245,7 @@ namespace PartyBot.Services
         {
             if (volume >= 150 || volume <= 0)
             {
-                return $"Volume must be between 0 and 150.";
+                return "Volume must be between 0 and 150.";
             }
             try
             {
@@ -269,7 +260,7 @@ namespace PartyBot.Services
             }
         }
 
-        public async Task<string> Pause(ulong guildId)
+        public async Task<string> PauseAsync(ulong guildId)
         {
             try
             {
@@ -289,26 +280,11 @@ namespace PartyBot.Services
             }
         }
 
-        public async Task<string> Resume(ulong guildId)
-        {
-            try
-            {
-                var player = _lavalink.DefaultNode.GetPlayer(guildId);
-                if (!player.IsPaused)
-                    await player.PauseAsync();
-                return $"**Resumed:** {player.CurrentTrack.Title}";
-            }
-            catch (InvalidOperationException ex)
-            {
-                return ex.Message;
-            }
-        }
-
         public async Task OnFinshed(LavaPlayer player, LavaTrack track, TrackReason reason)
         {
             if (reason is TrackReason.LoadFailed || reason is TrackReason.Cleanup)
                 return;
-            player.Queue.TryDequeue(out LavaTrack nextTrack);
+            player.Queue.TryDequeue(out var nextTrack);
 
             if (nextTrack is null)
             {
@@ -326,26 +302,13 @@ namespace PartyBot.Services
 
         #region Other
 
-        public async Task<Embed> DisplayStatsAsync()
-        {
-            var node = _lavalink.DefaultNode.Stats;
-            var embed = await Task.Run(() => new EmbedBuilder()
-                .WithTitle("Lavalink Stats")
-                .WithCurrentTimestamp()
-                .WithColor(Color.DarkMagenta)
-                .AddField("Uptime", node.Uptime, true));
-            return embed.Build();
-        }
-
         public async Task<string> GetLyricsAsync(ulong guildId)
         {
             var player = _lavalink.DefaultNode.GetPlayer(guildId);
-            LavaTrack track = player.CurrentTrack;
-            string lyrics = string.Empty;
+            var track = player.CurrentTrack;
             if (track == null)
                 return "Error, Unable to find current track, is the bot playing anything?";
-            else
-                return await LyricsResolver.SearchAsync(track);
+            return await LyricsResolver.SearchAsync(track);
         }
 
         #endregion
