@@ -1,4 +1,4 @@
-# PrincessBot [![Build Status](https://travis-ci.com/dvsxutact/Princess-Bot.svg?branch=master)](https://travis-ci.com/dvsxutact/Princess-Bot)     [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5c5f7aec386d495587b60546f9659d42)](https://www.codacy.com/app/joelp53/Party-Bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=joelp53/Party-Bot&amp;utm_campaign=Badge_Grade)
+# PrincessBot [![Build Status](https://travis-ci.com/dvsxutact/Princess-Bot.svg?branch=master)](https://travis-ci.com/dvsxutact/Princess-Bot)     [![Codacy Badge](https://api.codacy.com/project/badge/Grade/57f40c6ffce148b3b1bbddc32792c7ea)](https://www.codacy.com/app/dvsxutact/Princess-Bot?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dvsxutact/Princess-Bot&amp;utm_campaign=Badge_Grade)
 
 
 #### Forked Information Below.
