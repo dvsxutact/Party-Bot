@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\dvsxu\.Rider2018.3\config\consoles\db" t="IncludeRecursive" />
+    <e p="C:\Users\dvsxu\.Rider2018.3\config\extensions" t="IncludeRecursive" />
+    <e p="C:\Users\dvsxu\.Rider2018.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\dvsxu\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_PartyBot.112105036.00" t="ExcludeRecursive" />
+    <e p="E:\Development\Princess-Bot" t="IncludeFlat">
+      <e p="Database" t="IncludeRecursive">
+        <e p="AudioContext.cs" t="Include" />
+        <e p="audiofiles" t="Include">
+          <e p="audiofile.txt" t="Include" />
+          <e p="authur - song name.txt" t="Include" />
+        </e>
+        <e p="AudioFiles.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="config.json" t="Include" />
+        <e p="Database.csproj" t="IncludeRecursive" />
+        <e p="DbConfig.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.0" t="Include">
+              <e p="Database.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+      </e>
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="PartyBot.sln" t="IncludeFlat" />
+      <e p="PrincessBot" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="DataStructs" t="Include">
+          <e p="AudioOptions.cs" t="Include" />
+          <e p="BotConfig.cs" t="Include" />
+        </e>
+        <e p="Handlers" t="Include">
+          <e p="CommandHandler.cs" t="Include" />
+          <e p="EmbedHandler.cs" t="Include" />
+          <e p="Global.cs" t="Include" />
+        </e>
+        <e p="Modules" t="Include">
+          <e p="AudioModule.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.1" t="Include">
+              <e p="PrincessBot.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="PrincessBot.csproj" t="IncludeRecursive" />
+        <e p="Program.cs" t="Include" />
+        <e p="Services" t="Include">
+          <e p="AudioService.cs" t="Include" />
+          <e p="BotService.cs" t="Include" />
+          <e p="DiscordService.cs" t="Include" />
+          <e p="LoggingService.cs" t="Include" />
+        </e>
+      </e>
+    </e>
+  </component>
+</project>
