@@ -1,17 +1,17 @@
 ﻿using Discord;
 using Discord.WebSocket;
-using PartyBot.DataStructs;
-using PartyBot.Handlers;
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PrincessBot.DataStructs;
+using PrincessBot.Handlers;
 using Victoria;
 using Victoria.Entities;
 using Victoria.Entities.Enums;
 
-namespace PartyBot.Services
+namespace PrincessBot.Services
 {
     public sealed class AudioService
     {

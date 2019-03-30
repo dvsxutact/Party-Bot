@@ -1,14 +1,14 @@
 ﻿using Discord;
 using Newtonsoft.Json;
-using PartyBot.DataStructs;
-using PartyBot.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using PrincessBot.DataStructs;
+using PrincessBot.Services;
 
-namespace PartyBot.Handlers
+namespace PrincessBot.Handlers
 {
     public class Global
     {

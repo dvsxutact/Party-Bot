@@ -2,12 +2,12 @@
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
-using PartyBot.Handlers;
 using System;
 using System.Threading.Tasks;
+using PrincessBot.Handlers;
 using Victoria;
 
-namespace PartyBot.Services
+namespace PrincessBot.Services
 {
     public class DiscordService
     {

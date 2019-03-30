@@ -1,9 +1,9 @@
 ﻿using Discord.Commands;
 using Discord.WebSocket;
-using PartyBot.Services;
 using System.Threading.Tasks;
+using PrincessBot.Services;
 
-namespace PartyBot.Modules
+namespace PrincessBot.Modules
 {
     public class AudioModule : ModuleBase<SocketCommandContext>
     {

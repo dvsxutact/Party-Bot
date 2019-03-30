@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Victoria.Entities;
 
-namespace PartyBot.DataStructs
+namespace PrincessBot.DataStructs
 {
     public class AudioOptions
     {

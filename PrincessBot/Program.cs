@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using System.Threading.Tasks;
-using PartyBot.Services;
+using PrincessBot.Services;
 
-namespace PartyBot
+namespace PrincessBot
 {
     class Program
     {
